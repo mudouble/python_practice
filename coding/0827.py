@@ -291,29 +291,7 @@ def find_kth_min(listA, listB, k):
                 j+=1
                 if i+j == k:return listB[j-1]
                 
-def compute_next(pattern):
-    next = [0]*len(pattern)
-    j = 0 
-    for i in range(1, len(pattern)):
-        while j>0 and pattern[i]!=pattern[j]:
-            j = next[j-1]
-        if pattern[i] == pattern[j]:
-            j += 1
-        next[i] = j
-    return next
 
-def kmp(text, pattern):
-    '''kmp字符串匹配问题'''
-    next = compute_next(pattern)
-    j = 0
-    for i in range(len(text)):
-        while j>0 and text[i]!=pattern[j]:
-            j = next[j-1]
-        if text[i] == pattern[j]:
-            j+=1
-        if j == len(pattern):
-            print(f"found pattern ait index {i-j+1}")
-            j = next[j-1]
 
 def share_gold(n, gold):
     '''分金币-中位数的特性是使得数据分布两侧的距离总和最小'''
@@ -449,6 +427,55 @@ def duplicate_removal(nums):
             slow+=1
     return nums[:slow+1]
 
+def compute_next(pattern):
+    next = [0]*len(pattern)
+    j = 0
+    for i in range(1, len(pattern)):
+        while j>0 and pattern[i]!=pattern[j]:
+            j = next[j-1]
+        if pattern[i] == pattern[j]:
+            j += 1
+        next[i] = j
+    return next
+
+def kmp(text, pattern):
+    '''kmp字符串匹配问题-在一个文本字符串找到一个模式字符串的位置'''
+    next = compute_next(pattern)
+    j = 0
+    for i in range(len(text)):
+        while j>0 and text[i]!=pattern[j]:
+            j = next[j-1]
+        if text[i] == pattern[j]:
+            j+=1
+        if j == len(pattern):
+            print(f"found pattern at index {i-j+1}")
+            j = next[j-1]
+
+def LCS(X, Y):
+    '''最长公共子序列-在两个序列中找最长的公共子序列，出现的顺序是一致的'''
+    m, n = len(X), len(Y)
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if X[i-1] == Y[j-1]:
+                dp[i][j] = dp[i-1][j-1]+1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    print(f"dp: {dp}")
+    # 回溯
+    lcs = []
+    i, j = m, n
+    while i>0 and j>0:
+        if X[i-1] ==Y[j-1]:
+            lcs.append(X[i-1])
+            i-=1
+            j-=1
+        elif dp[i-1][j]>dp[i][j-1]:
+            i-=1
+        else:
+            j-=1
+    print("".join(reversed(lcs)))
+    return "".join(reversed(lcs))
 
 if __name__ == '__main__':
-    merger([[2,6],[1,3],[8,10],[15,18]])
+    pass
