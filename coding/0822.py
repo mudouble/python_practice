@@ -1,69 +1,6 @@
 import heapq
 from math import inf
 
-def relation():
-    n, m = map(int, input().split())
-    edges = [tuple(map(int, input().split())) for _ in range(n)]
-    q = int(input())
-    queries = [tuple(map(int, input().split())) for _ in range(q)]
-    graph ={i: [] for i in range(n)}
-    for u, v in edges:
-        graph[u].append(v)
-    ans = []
-    visited = set()
-    for start, end in queries:
-        if dfs(graph, start, end, visited):ans.append(True)
-        else:ans.append(False)
-    return ans
-
-def dfs(graph, start, end, visited):
-    if start == end:
-        return True
-    visited.add(start)
-    for neighbor in graph[start]:
-        if neighbor not in visited and dfs(graph, neighbor, end):
-            return True
-    return False
-
-def djstl(matrix, start, end, n, m):
-    visited = [[False]*m for _ in range(n)]
-    distance = [[inf]*m for _ in range(n)]
-    distance[start][end] = 0
-    h = []
-    heapq.heappush(h, (0, start, end))
-    while h:
-        dist, start, end = heapq.heappop(h)
-        if visited[start][end]: continue
-        visited[start][end] = True
-        for i, j in ((start-1, end), (start+1, end), (start, end-1), (start, end+1)):
-            if i<0 or j<0 or i>=n or j>=m or visited[i][j]:continue
-            if matrix[i][j] == 'S' or matrix[i][j] == 'E' or matrix[i][j] == 'C' or matrix[i][j]=='B':w=0
-            else:w = matrix[i][j]
-            if distance[start][end]+w < distance[i][j]:
-                distance[i][j] = distance[start][end]+w
-                heapq.heappush(h, (distance[i][j], i ,j))
-    return distance
-def graph_cost():
-    n, m = map(int, input().split())
-    matrix = [input().split() for _ in range(n)]
-    C = []
-    si,sj, ei,sj = 0,0,0,0
-    for i in range(n):
-        for j in range(m):
-            if matrix[i][j] == 'C':
-                C.append((i, j))
-            if matrix[i][j] == 'S':
-                si, sj = i, j
-            if matrix[i][j] == 'E':
-                ei, ej = i, j
-    cost = inf
-    for ci, cj in C:
-        dis = djstl(matrix, ci, cj)
-        if dis[si][sj]==inf or dis[ei][ej]==inf:
-            return -1
-        else:
-            cost = min(cost, dis[si][sj]+dis[ei][ej])
-    return cost
 
 def binary_search(nums, target, ans):
 

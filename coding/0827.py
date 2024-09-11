@@ -1,6 +1,9 @@
 '''
 面试题
 '''
+import random
+
+
 class QueueUsingStacks:
     '''栈实现队列'''
     def __init__(self):
@@ -51,7 +54,7 @@ class SortMethod:
     def partition(self, arr, low, high):
         i = (low-1)
         pivot = arr[high]
-        for j in range(arr):
+        for j in range(low, high):
             if arr[j] < pivot:
                 i+=1
                 arr[j], arr[i] = arr[i], arr[j]
@@ -67,11 +70,14 @@ class SortMethod:
         - 空间复杂度 O(logn)
         - 分而治之，效率高
         '''
-        if len(arr)<=1: return arr
         if low < high:
+            # 随机化基准点-不然很容易超时，大型的数据还是使用归并排序把
+            pivot_index = random.randint(low, high)
+            nums[high], nums[pivot_index] = nums[pivot_index], nums[high]
+
             pi = self.partition(arr, low, high)
-            self.quickSort(arr, low, pi-1)
-            self.quickSort(arr, pi, high)
+            self.quick_sort(arr, low, pi-1)
+            self.quick_sort(arr, pi, high)
         return arr  
     
     def merge_sort(self, arr):
@@ -89,8 +95,8 @@ class SortMethod:
         right = arr[mid:]
         print("left: ", left)
         print("right: ", right)
-        self.mergeSort(left)
-        self.mergeSort(right)
+        self.merge_sort(left)
+        self.merge_sort(right)
         i=j=k=0
         while i<len(left) and j<len(right):
             if left[i] < right[j]:
@@ -186,6 +192,7 @@ class SearchMethod:
         while left<=right:
             mid = (left+right)//2
             if arr[mid] == target:
+
                 return mid
             elif arr[mid] < target:
                 left = mid+1
@@ -478,4 +485,6 @@ def LCS(X, Y):
     return "".join(reversed(lcs))
 
 if __name__ == '__main__':
-    pass
+    nums = [-1,0,0,3,5,9,9,12]
+    method = SearchMethod()
+    print(method.binary_search(nums, 9))

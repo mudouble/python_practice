@@ -15,6 +15,19 @@ def lengthOfLongestSubstring(s: str):
     print(ans)
     return ans
 
+def longgest_substring(s, k):
+    '''k个重复的最长子串'''
+    if len(s)<k:
+        return 0
+    char_count = {}
+    for item in s:
+        char_count[item] = char_count.get(item, 0)+1
+    for ch in char_count:
+        if char_count[ch]<k:
+            substrings = s.split(ch)
+            return max(longgest_substring(substring, k) for substring in substrings)
+    return len(s)
+
 
 def subarraysWithKDistinct(nums: List[int], k: int) -> int:
     '''子数组中不同整数的绝对差值小于等于k'''
@@ -53,5 +66,5 @@ def atMostKDistinct(nums, k):
 
 
 if __name__ == '__main__':
-    res = subarraysWithKDistinct([2, 1, 1, 1, 2], 1)
-    print(res)
+    s= "aaaab"
+    print(longgest_substring(s, 4))
