@@ -71,6 +71,7 @@ def fun2():
 
 
 def func2():
+    '''字符串处理'''
     ans, index, strs = [], 0, ""
     while True:
         s = input()
@@ -107,6 +108,9 @@ def func2():
     print("".join(ans))
 
 def func3():
+    '''广度优先，传播的时间
+    https://kamacoder.com/problempage.php?pid=1214
+    '''
     n = int(input())
     m = int(input())
     j, k = map(int, input().split())

@@ -89,34 +89,8 @@ def buy_good():
     return res
 
 
-def loop():
-    '''
-    - 拓扑排序+GTO博弈
-    -基环树-在一棵树的基础上加上一个环，n个节点n条边'''
-    n, x = map(int, input().split())
-    graph = [[]for _ in range(n+1)]
-    indegre = [0]*(n+1)
-    for i in range(1, n+1):
-        u, v = map(int, input().split())
-        graph[u].append(v)
-        indegre[u]+=1
-        indegre[v]+=1
-    indegre_one = []
-    for i in range(1, n+1):
-        if indegre[i]==1:
-            if i==x:
-                return "xiao"
-            indegre_one.append(i)
-    print(f"indgre {indegre}")
-    print(f"indegre_one {indegre_one}")
-    if len(indegre_one)==0:
-        return "Draw"
-    elif len(indegre_one)%2==0:
-        return "xiao"
-    else:
-        return "da"
-                
-        
+
+
 
 
             

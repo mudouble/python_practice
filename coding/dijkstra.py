@@ -216,10 +216,73 @@ def max_land():
     return max_size_after_ignition
 
 
+'''
+- 给出一个有向图，将这个有向图转换为线性的排序，就叫拓扑排序（必须无环）
+- 实现拓扑排序的两种算法：BFS和DFS
+- BFS步骤：
+    1. 找到入度为0的节点，加入结果集
+    2. 将该节点从图中移除
+'''
+def loop():
+    '''
+    - 拓扑排序+GTO博弈
+    -基环树-在一棵树的基础上加上一个环，n个节点n条边'''
+    n, x = map(int, input().split())
+    graph = [[]for _ in range(n+1)]
+    indegre = [0]*(n+1)
+    for i in range(1, n+1):
+        u, v = map(int, input().split())
+        graph[u].append(v)
+        indegre[u]+=1
+        indegre[v]+=1
+    indegre_one = []
+    for i in range(1, n+1):
+        if indegre[i]==1:
+            if i==x:
+                return "xiao"
+            indegre_one.append(i)
+    if len(indegre_one)==0:
+        return "Draw"
+    elif len(indegre_one)%2==0:
+        return "xiao"
+    else:
+        return "da"
+
+def reliance():
+    '''文件依赖找出执行顺序'''
+    n, m = map(int, input().split())
+    indegre = [0]*n
+    res = []
+    umap = {}
+    for i in range(m):
+        s, t = map(int, input().split())
+        indegre[t]+=1
+        umap.setdefault(s, []).append(t)
+    q = []
+    for i in range(n):
+        if indegre[i]==0:
+            q.append(i)
+    while q:
+        cur = q.pop(0)
+        res.append(cur)
+        if cur in umap:
+            for file in umap[cur]:
+                indegre[file]-=1
+                if indegre[file]==0:q.append(file)
+
+    if len(res)==n:
+        for i in range(n-1):
+            print(res[i], end=" ")
+        print(res[n-1])
+    else:
+        print(-1)
+
+
 
 
 if __name__ == '__main__':
-    max_land()
+    reliance()
+
 
         
     
