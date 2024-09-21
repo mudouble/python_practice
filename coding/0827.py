@@ -446,7 +446,9 @@ def compute_next(pattern):
     return next
 
 def kmp(text, pattern):
-    '''kmp字符串匹配问题-在一个文本字符串找到一个模式字符串的位置'''
+    '''kmp字符串匹配问题-在一个文本字符串找到一个模式字符串的位置
+    复杂度 O（m+n）
+    '''
     next = compute_next(pattern)
     j = 0
     for i in range(len(text)):
