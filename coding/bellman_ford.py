@@ -104,8 +104,32 @@ def bellaman_ford_limit():
         print(min_dist[dst])
     
 def floyd():
-    '''多源最短路径问题'''
+    '''多源最短路径问题
+    多个起点到多个终点的多条最短路径问题
+    定义一个三维数组，初始化为最大值，然后计算i到j经过k个顶点的最短距离
+    因为k只是记录上一层有没有更短的距离，并不需要记录k-2等
+    '''
+    n,m = map(int, input().split())
+    grid = [[10005 for i in range(n+1)] for j in range(n+1)]
+    for i in range(m):
+        u, v, w = map(int, input().split())
+        grid[u][v] = w
+        grid[v][u] = w
+
+
+    for k in range(1, n+1):
+        for i in range(1, n+1):
+            for j in range(1, n+1):
+                grid[i][j] = min(grid[i][j], grid[i][k]+grid[k][j])
+
+    z = int(input())
+    for i in range(z):
+        start, end = map(int, input().split())
+        if grid[start][end]==10005:print("unreachable")
+        else:
+            print(grid[start][end])
+
 
 
 if __name__ == '__main__':
-    bellaman_ford_limit()
+    floyd()

@@ -280,7 +280,7 @@ class LinkNode:
 
     def print_link(self, head):
         while head:
-            print(head.val, end="->")
+            self.x = print(head.val, end="->")
             head = head.next
 
 def find_kth_min(listA, listB, k):
