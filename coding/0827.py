@@ -52,8 +52,10 @@ class SortMethod:
         return self.quickSort_space(left) + middle + self.quickSort_space(right)
     
     def partition(self, arr, low, high):
+        '''主要将数组arr在low和high的范围内进行分区，使得基准元素pivot左边的元素都小于基准，右边的元素都大于基准'''
         i = (low-1)
         pivot = arr[high]
+        # i是记录交换的位置的从low-1开始，从low开始遇到小于基准的元素，将i+1，然后交换位置，也就是将小的放到前面，返回基准元素的位置
         for j in range(low, high):
             if arr[j] < pivot:
                 i+=1
@@ -93,8 +95,6 @@ class SortMethod:
         mid = len(arr)//2
         left = arr[:mid]
         right = arr[mid:]
-        print("left: ", left)
-        print("right: ", right)
         self.merge_sort(left)
         self.merge_sort(right)
         i=j=k=0
